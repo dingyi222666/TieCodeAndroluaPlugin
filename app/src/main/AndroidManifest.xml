@@ -3,7 +3,7 @@
     package="com.dingyi.tiecode.plugin.androlua">
 
     <application
-        android:name=".PluginMain"
+        android:name=".PluginApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,28 +11,29 @@
         android:supportsRtl="true">
 
 
-    <meta-data
-        android:name="tiecode_plugin"
-        android:value="true" />
+        <meta-data
+            android:name="tiecode_plugin"
+            android:value="true" />
 
-    <meta-data
-        android:name="plugin_name"
-        android:value="AndroLua项目管理器" />
-    <meta-data
-        android:name="plugin_targetVersion"
-        android:value="4" />
-    <meta-data
-        android:name="plugin_versionCode"
-        android:value="2" />
-    <meta-data
-        android:name="plugin_versionName"
-        android:value="1.0" />
-    <meta-data
-        android:name="plugin_author"
-        android:value="dingyi" />
-    <meta-data
-        android:name="plugin_note"
-        android:value="AndroLua项目管理器，用于支持创建和打包AndroLua工程项目" />
+        <meta-data
+            android:name="plugin_name"
+            android:value="AndroLua项目管理器" />
+        <meta-data
+            android:name="plugin_targetVersion"
+            android:value="4" />
+        <meta-data
+            android:name="plugin_versionCode"
+            android:value="2" />
+        <meta-data
+            android:name="plugin_versionName"
+            android:value="1.0" />
+        <meta-data
+            android:name="plugin_author"
+            android:value="dingyi" />
+        <meta-data
+            android:name="plugin_note"
+            android:value="AndroLua项目管理器，用于支持创建和打包AndroLua工程项目" />
+
     </application>
 
 </manifest>
