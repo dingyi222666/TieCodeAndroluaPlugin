@@ -71,6 +71,8 @@ class LuaProjectTemplate(
                         targetInitFileString.replace("\${" + it.key + "}$", it.value.toString())
                 }
 
+
+
                 targetInitFilePath.writeText(targetInitFileString)
 
                 callback.onSuccess()
