@@ -38,7 +38,7 @@ class LuaProjectTemplate(
 
         messages.addRequireMessage(
             Message(
-                Message.Kind.STRING, "appPackcageName", "软件包名", "如com.lua.app", "com.lua.app"
+                Message.Kind.STRING, "appPackageName", "软件包名", "如com.lua.app", "com.lua.app"
             )
         )
 
@@ -68,9 +68,8 @@ class LuaProjectTemplate(
 
                 startupKeys.messages.forEach {
                     targetInitFileString =
-                        targetInitFileString.replace("\${" + it.key + "}$", it.value.toString())
+                        targetInitFileString.replace("\${" + it.key + "}", it.value.toString())
                 }
-
 
 
                 targetInitFilePath.writeText(targetInitFileString)
