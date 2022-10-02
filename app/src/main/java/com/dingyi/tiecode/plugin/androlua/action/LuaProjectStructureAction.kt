@@ -21,7 +21,7 @@ class LuaProjectStructureAction : ProjectFilePageAction() {
         addSupportOpenFileTypes(".lua", ".aly")
 
         registerPSObjectFilter {
-            "project.json" == it.name
+            it.isDirectory && it.name == ".tiecode"
         }
 
         project = ProjectContext.getCurrentProject() as LuaProject

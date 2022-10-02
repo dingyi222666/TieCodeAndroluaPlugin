@@ -1,38 +1,53 @@
 package com.dingyi.tiecode.plugin.androlua.action
 
-import com.dingyi.tiecode.plugin.androlua.PluginApplication
-import com.dingyi.tiecode.plugin.androlua.ktx.getJavaClass
-import com.tiecode.plugin.action.component.task.TaskPerformerAction
+import com.dingyi.tiecode.plugin.androlua.build.base.LuaTaskBuilder
+import com.dingyi.tiecode.plugin.androlua.project.LuaProject
 import com.tiecode.plugin.action.page.code.CodePageAction
+import com.tiecode.plugin.action.page.code.LogPageAction
+import com.tiecode.plugin.api.log.Logger
+import com.tiecode.plugin.api.log.model.LogMessage
+import com.tiecode.plugin.api.log.model.TieLogMessage
 import com.tiecode.plugin.api.project.ProjectContext
-import com.tiecode.plugin.api.project.task.performer.TaskPerformer
 
 class LuaCodePageAction : CodePageAction() {
 
-    override fun onLoadProject() {
+    private lateinit var project: LuaProject
 
-        val currentProject = ProjectContext.getCurrentProject()
-
-        val actionController = PluginApplication
-            .application
-            .appliedActionController
-
-        if (currentProject.classificationId == (0x53).toString()) {
+    private lateinit var logger: Logger
 
 
-            val taskPerformer =
-                actionController.getAction(getJavaClass<TaskPerformerAction>()).actionable
+    override fun onCreate() {
 
 
-            initBuildTask(taskPerformer)
+        logger = actionController.getAction(LogPageAction::class.java).logger
 
-        }
+
+
+        project = ProjectContext.getCurrentProject() as LuaProject
+
 
     }
 
-    private fun initBuildTask(taskPerformer: TaskPerformer) {
-       /* taskPerformer.setTasks(
+    override fun onLoadProject() {
 
-        )*/
+
+    }
+
+
+    private fun runBuild() {
+
+        openLogPage()
+
+
+        val builder = LuaTaskBuilder(project, logger)
+
+        builder.runBuild { _, _ ->
+
+        }
+    }
+
+    //TODO: 读取包名，如果已经安装则尝试调用LuaActivity启动以实现热启动
+    override fun runProject() {
+        runBuild()
     }
 }

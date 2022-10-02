@@ -20,6 +20,7 @@ class LuaProjectTemplate(
     }
 
     override fun getPicture(): Drawable? {
+        //return PluginApplication.application.getDrawable(R.drawable.androlua)
         return DrawableUtils.getDrawable(PluginApplication.application, R.drawable.androlua)
     }
 
@@ -30,6 +31,7 @@ class LuaProjectTemplate(
     override fun getRequireMessages(): RequireMessages {
         val messages = RequireMessages()
 
+        //TODO: 优化键值对
         messages.addRequireMessage(
             Message(
                 Message.Kind.STRING, "appName", "软件名称", "如MyLuaApplication", "MyLuaApplication"
@@ -46,39 +48,36 @@ class LuaProjectTemplate(
     }
 
     override fun create(
-        project: Project,
-        startupKeys: RequireMessages,
-        callback: Project.OnProjectCreateListener
+        project: Project, startupKeys: RequireMessages, callback: Project.OnProjectCreateListener
     ) {
 
-        //不管了 直到没有官方的thread pool之前都这样
-        thread {
+        /*  //不管了 直到没有官方的thread pool之前都这样
+          thread {
+  */
+        try {
 
-            try {
-                ZipUtils
-                    .unZipAssetsFolder(
-                        PluginApplication.application,
-                        "androlua_template.zip",
-                        project.projectDir.toString()
-                    )
+            ZipUtils.unZipAssetsFolder(
+                    PluginApplication.application,
+                    "androlua_template.zip",
+                    project.projectDir.toString()
+                )
 
-                val targetInitFilePath = File(project.projectDir, "src/init.lua")
+            val targetInitFilePath = File(project.projectDir, "src/init.lua")
 
-                var targetInitFileString = targetInitFilePath.readText()
+            var targetInitFileString = targetInitFilePath.readText()
 
-                startupKeys.messages.forEach {
-                    targetInitFileString =
-                        targetInitFileString.replace("\${" + it.key + "}", it.value.toString())
-                }
-
-
-                targetInitFilePath.writeText(targetInitFileString)
-
-                callback.onSuccess()
-            } catch (e: Exception) {
-                callback.onFail(e.message)
+            startupKeys.messages.forEach {
+                targetInitFileString =
+                    targetInitFileString.replace("\${" + it.key + "}", it.value.toString())
             }
-        }.start()
+
+
+            targetInitFilePath.writeText(targetInitFileString)
+
+            callback.onSuccess()
+        } catch (e: Exception) {
+            callback.onFail(e.message)
+        }/*  }.start()*/
 
     }
 

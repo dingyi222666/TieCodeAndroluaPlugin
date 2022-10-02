@@ -9,6 +9,7 @@ class LuaProjectFilePageAction: ProjectFilePageAction() {
     }
 
 
+
     override fun onCreate() {
         addSupportOpenFileTypes(".lua",".aly")
     }

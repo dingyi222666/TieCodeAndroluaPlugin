@@ -11,17 +11,17 @@ class LuaProjectListPageAction:ProjectListPageAction() {
 
     companion object {
 
-        private val MENU_TITLE = "打包应用"
+        private val MENU_TITLE = "构建项目"
         private val MENU_ID = 100
     }
 
     override fun onCreateProjectMenu(menu: TieMenu) {
-        menu.addItem(TieMenuItem(MENU_TITLE, MENU_ID))
+       /* menu.addItem(TieMenuItem(MENU_TITLE, MENU_ID))*/
     }
 
     override fun onProjectMenuClick(item: TieItem) {
-        if (item.id == MENU_ID) {
-            Toast.makeText(activity, "打包应用", Toast.LENGTH_SHORT).show()
-        }
+      /*  if (item.id == MENU_ID) {
+            Toast.makeText(activity, MENU_TITLE, Toast.LENGTH_SHORT).show()
+        }*/
     }
 }
