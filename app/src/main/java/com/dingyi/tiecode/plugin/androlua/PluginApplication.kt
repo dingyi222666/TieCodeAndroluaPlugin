@@ -1,5 +1,6 @@
 package com.dingyi.tiecode.plugin.androlua
 
+import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.os.Handler
@@ -19,6 +20,8 @@ class PluginApplication : ProjectPluginApp() {
     val mainHandler = Handler(Looper.getMainLooper())
 
     override fun onInitPlugin(superContext: Context) {
+
+        tiecodeContext = superContext
 
         if (Build.VERSION.SDK_INT < 26) {
             Toast.makeText(superContext, "本插件不支持安卓版本小于8的系统", 0).show()
@@ -64,6 +67,7 @@ class PluginApplication : ProjectPluginApp() {
     companion object {
         lateinit var application: PluginApplication
         lateinit var luaVm: SingleLuaVM
+        lateinit var tiecodeContext:Context
     }
 
 

@@ -167,6 +167,7 @@ dependencies {
 
     implementation("io.github.dingyi222666:androlua-standlone:1.0.4")
 
+    implementation ("com.github.SumiMakito:QuickKV:1.0.5")
 
 }
 

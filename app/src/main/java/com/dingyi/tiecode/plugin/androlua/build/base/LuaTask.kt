@@ -3,7 +3,11 @@ package com.dingyi.tiecode.plugin.androlua.build.base
 
 import com.dingyi.tiecode.plugin.androlua.PluginApplication
 import com.dingyi.tiecode.plugin.androlua.build.context.BuildContext
+import com.dingyi.tiecode.plugin.androlua.data.DataFactory
+import com.dingyi.tiecode.plugin.androlua.data.KeyValueData
+import com.dingyi.tiecode.plugin.androlua.ktx.getJavaClass
 import com.dingyi.tiecode.plugin.androlua.project.LuaProject
+import com.tiecode.develop.util.firstparty.file.FileUtils
 import com.tiecode.plugin.api.log.Logger
 import com.tiecode.plugin.api.log.model.LogMessage
 import com.tiecode.plugin.api.log.model.TieLogMessage
@@ -73,4 +77,17 @@ abstract class LuaTask : Task() {
     fun performWithResult(): Any? {
         return null
     }
+
+    fun <T> createKeyValueData(databaseName: String, dataClass: Class<T>): KeyValueData<String, T> {
+        val cacheDir = getBuildDir("cache")
+        FileUtils.ensureParentDir(cacheDir)
+        return DataFactory.createKeyValueData(cacheDir, databaseName, dataClass).apply {
+            readAll()
+        }
+    }
+
+
 }
+
+inline fun <reified T> LuaTask.createKeyValueData(databaseName: String): KeyValueData<String, T> =
+    this.createKeyValueData(databaseName, getJavaClass())
