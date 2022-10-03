@@ -1,6 +1,7 @@
 package com.dingyi.tiecode.plugin.androlua.action
 
 import com.dingyi.tiecode.plugin.androlua.build.base.LuaTaskBuilder
+import com.dingyi.tiecode.plugin.androlua.ktx.getJavaClass
 import com.dingyi.tiecode.plugin.androlua.project.LuaProject
 import com.tiecode.plugin.action.page.code.CodePageAction
 import com.tiecode.plugin.action.page.code.LogPageAction
@@ -19,7 +20,7 @@ class LuaCodePageAction : CodePageAction() {
     override fun onCreate() {
 
 
-        logger = actionController.getAction(LogPageAction::class.java).logger
+        logger = actionController.getAction(getJavaClass<LogPageAction>()).logger
 
 
 
@@ -38,7 +39,6 @@ class LuaCodePageAction : CodePageAction() {
 
         openLogPage()
 
-
         val builder = LuaTaskBuilder(project, logger)
 
         builder.runBuild { _, _ ->
@@ -48,6 +48,9 @@ class LuaCodePageAction : CodePageAction() {
 
     //TODO: 读取包名，如果已经安装则尝试调用LuaActivity启动以实现热启动
     override fun runProject() {
+
+        actionController.getAction(getJavaClass<LogPageAction>()).clearLog()
+
         runBuild()
     }
 }

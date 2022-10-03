@@ -70,9 +70,9 @@ class UnApkResourceTask : LuaTask() {
 
             val targetDir = getBuildDir("resource")
 
-            runOnUiThread {
-                //  logger.log(TieLogMessage(targetDir.toString()))
-            }
+          /*  runOnUiThread {
+                  logger.log(TieLogMessage(targetDir.toString()))
+            }*/
 
             targetDir.mkdirs()
 

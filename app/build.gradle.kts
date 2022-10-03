@@ -163,7 +163,7 @@ project.afterEvaluate {
 
 dependencies {
 
-    compileOnly(files("libs/tiecode-plugin-api-1.0.0.jar"))
+    compileOnly(files("libs/tiecode-plugin-api-1.0.0.jar","libs/luaj.jar"))
 
     implementation("io.github.dingyi222666:androlua-standlone:1.0.4")
 
