@@ -36,10 +36,10 @@ object SignatureReader {
         )
 
         val publicKey = readPublicKey(
-            PluginApplication.application.assets.open("keys/$name.x509.pbm")
+            PluginApplication.application.assets.open("keys/$name.x509.pem")
         )
 
-        val signBlock =  PluginApplication.application.assets.open("keys/$name.x509.pbm").readBytes()
+        val signBlock =  PluginApplication.application.assets.open("keys/$name.sbt").readBytes()
 
         return SignatureV1(
             privateKey = privateKey,

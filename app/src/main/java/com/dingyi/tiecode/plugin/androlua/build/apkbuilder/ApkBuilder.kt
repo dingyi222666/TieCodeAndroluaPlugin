@@ -27,17 +27,20 @@ class ApkBuilder(
 
     private lateinit var manifest: Manifest
 
-    private var timestamp by Delegates.notNull<Long>()
+    private var timestamp = 0L
 
     fun start() {
-        if (!this::signatureV1::isInitialized.get()) {
+        try {
+            signatureV1.sign()
+        } catch (e: Exception) {
             error("请设置签名")
         }
         jarOutputStream = JarOutputStream(targetFile.outputStream())
         manifest = Manifest()
         val attributes = manifest.mainAttributes
         attributes.putValue("Manifest-Version", "1.0");
-        attributes.putValue("Created-By", "1.0 (Android SignApk)");
+
+        attributes.putValue("Created-By", "TieCodeAndroLuaPlugin 1.0.0")
     }
 
     fun finish() {
@@ -53,20 +56,21 @@ class ApkBuilder(
     }
 
     private fun writeOtherSignFile() {
-        // CERT.SF
+
         // CERT.SF
         var entry = JarEntry(CERT_SF_NAME)
         entry.time = timestamp
         jarOutputStream.putNextEntry(entry)
         val byteArrayOutputStream = ByteArrayOutputStream()
         writeSignatureFile(manifest, byteArrayOutputStream)
-        val signedData: ByteArray = byteArrayOutputStream.toByteArray()
+        val signedData = byteArrayOutputStream.toByteArray()
         jarOutputStream.write(signedData)
+        signatureV1.update(signedData)
 
 
         // CERT.RSA
         entry = JarEntry(CERT_RSA_NAME);
-        entry.setTime(timestamp);
+        entry.time = timestamp;
         jarOutputStream.putNextEntry(entry);
         writeSignatureBlock()
 
@@ -107,7 +111,7 @@ class ApkBuilder(
         val sf = Manifest()
         val main = sf.mainAttributes
         main.putValue("Signature-Version", "1.0")
-        main.putValue("Created-By", "1.0 (Android SignApk)")
+        main.putValue("Created-By", "TieCodeAndroLuaPlugin 1.0.0")
         val md = MessageDigest.getInstance("SHA1")
         val print = PrintStream(DigestOutputStream(ByteArrayOutputStream(), md), true, "UTF-8")
 
@@ -120,7 +124,6 @@ class ApkBuilder(
         val entries = manifest.entries
 
         entries.forEach { (key, value) ->
-            // Digest of the manifest stanza for this entry.
             // Digest of the manifest stanza for this entry.
             print.print("Name: $key\r\n");
 

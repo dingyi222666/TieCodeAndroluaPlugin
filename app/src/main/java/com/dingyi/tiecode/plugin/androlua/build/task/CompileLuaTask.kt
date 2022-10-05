@@ -72,7 +72,6 @@ class CompileLuaTask : LuaTask() {
     }
 
 
-    //TODO:编译aly
     private fun compileAly(file: File): File {
         val filePathWithoutSourceDir = file.substringPath(sourceDir)
 
@@ -81,7 +80,7 @@ class CompileLuaTask : LuaTask() {
             return layout
         """.trimIndent()
 
-        val targetFile = compileLuaDir.resolve(filePathWithoutSourceDir)
+        val targetFile = compileLuaDir.resolve(filePathWithoutSourceDir.replace(".aly",".lua"))
 
         try {
 
@@ -108,7 +107,6 @@ class CompileLuaTask : LuaTask() {
         return targetFile
     }
 
-    //TODO:编译lua
     private fun compileLua(file: File): File {
 
         val filePathWithoutSourceDir = file.substringPath(sourceDir)

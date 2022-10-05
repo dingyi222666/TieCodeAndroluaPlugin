@@ -1,6 +1,8 @@
 package com.dingyi.tiecode.plugin.androlua.build.base
 
 import com.dingyi.tiecode.plugin.androlua.build.task.CompileLuaTask
+import com.dingyi.tiecode.plugin.androlua.build.task.ModifyAndroidManifestTask
+import com.dingyi.tiecode.plugin.androlua.build.task.PackageApkTask
 import com.dingyi.tiecode.plugin.androlua.build.task.ReadConfigTask
 import com.dingyi.tiecode.plugin.androlua.build.task.UnApkResourceTask
 import com.dingyi.tiecode.plugin.androlua.project.LuaProject
@@ -24,6 +26,8 @@ class LuaTaskBuilder(
                 ReadConfigTask(),
                 UnApkResourceTask(),
                 CompileLuaTask(),
+                ModifyAndroidManifestTask(),
+                PackageApkTask(),
             ), listener
         )
     }
