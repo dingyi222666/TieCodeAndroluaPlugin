@@ -1,6 +1,7 @@
 package com.dingyi.tiecode.plugin.androlua.build.base
 
 import com.dingyi.tiecode.plugin.androlua.build.task.CompileLuaTask
+import com.dingyi.tiecode.plugin.androlua.build.task.ReadConfigTask
 import com.dingyi.tiecode.plugin.androlua.build.task.UnApkResourceTask
 import com.dingyi.tiecode.plugin.androlua.project.LuaProject
 import com.tiecode.plugin.api.log.Logger
@@ -20,6 +21,7 @@ class LuaTaskBuilder(
     fun runBuild(listener: ResultListener) {
         super.build(
             listOf(
+                ReadConfigTask(),
                 UnApkResourceTask(),
                 CompileLuaTask(),
             ), listener

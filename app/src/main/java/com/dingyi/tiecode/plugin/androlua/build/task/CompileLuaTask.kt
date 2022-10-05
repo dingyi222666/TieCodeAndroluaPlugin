@@ -2,6 +2,7 @@ package com.dingyi.tiecode.plugin.androlua.build.task
 
 import com.dingyi.tiecode.plugin.androlua.build.base.LuaTask
 import com.dingyi.tiecode.plugin.androlua.build.base.createKeyValueData
+import com.dingyi.tiecode.plugin.androlua.build.compiler.LuaCompiler
 import com.dingyi.tiecode.plugin.androlua.data.KeyValueData
 import com.dingyi.tiecode.plugin.androlua.ktx.md5
 import com.dingyi.tiecode.plugin.androlua.ktx.substringPath
@@ -88,6 +89,8 @@ class CompileLuaTask : LuaTask() {
 
             targetFile.writeText(targetCode)
 
+            LuaCompiler.compile(targetFile.path,targetFile.path)
+
         } catch (e: Exception) {
             runOnUiThread {
 
@@ -115,6 +118,8 @@ class CompileLuaTask : LuaTask() {
         try {
 
             file.copyTo(targetFile, true)
+
+            LuaCompiler.compile(targetFile.path,targetFile.path)
 
         } catch (e: Exception) {
             runOnUiThread {

@@ -18,30 +18,30 @@ class LuaJVM:Closeable {
         state.openBase()
     }
 
-    fun doString(str: String?) {
+    fun doString(str: String) {
         state.globals.load(str).call()
     }
 
-    fun loadFile(str: String?): LuaTable {
+    fun loadFile(path: String): LuaTable {
         val table = LuaValue.tableOf()
         try {
-            state.globals.load(FileInputStream(str), "@d", "bt", table).invoke()
+            state.globals.load(FileInputStream(path), "@d", "bt", table).invoke()
         } catch (ignored: Exception) {
         }
         return table
     }
 
-    fun loadString(str: String?): LuaTable {
+    fun loadString(str: String): LuaTable {
         val table = LuaValue.tableOf()
         state.globals["load"].call(LuaValue.valueOf(str), table)
         return table
     }
 
-    fun doFile(absolutePath: String?): LuaValue {
+    fun doFile(absolutePath: String): LuaValue {
         return state.globals.loadfile(absolutePath).call()
     }
 
-    operator fun get(key: String?): Any {
+    operator fun get(key: String): Any {
         return state.getLuaValue(state.getGlobal(key))
     }
 
@@ -49,7 +49,7 @@ class LuaJVM:Closeable {
         state.close()
     }
 
-    fun runFunc(name: String?, vararg array: Any): Varargs {
+    fun runFunc(name: String, vararg array: Any): Varargs {
         val values = arrayOfNulls<LuaValue>(array.size)
         for (i in array.indices) {
             values[i] = LuaValue.valueOf(array[i].toString())

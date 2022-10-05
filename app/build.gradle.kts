@@ -163,11 +163,16 @@ project.afterEvaluate {
 
 dependencies {
 
-    compileOnly(files("libs/tiecode-plugin-api-1.0.0.jar","libs/luaj.jar"))
+    compileOnly(files("libs/tiecode-plugin-api-1.0.0-alpha24.jar"))
+
+    implementation(files("libs/luaj.jar","libs/sign.jar"))
 
     implementation("io.github.dingyi222666:androlua-standlone:1.0.4")
 
-    implementation ("com.github.SumiMakito:QuickKV:1.0.5")
+    implementation("com.github.SumiMakito:QuickKV:1.0.5")
+
+    implementation("com.android:zipflinger:8.0.0-alpha02")
+
 
 }
 

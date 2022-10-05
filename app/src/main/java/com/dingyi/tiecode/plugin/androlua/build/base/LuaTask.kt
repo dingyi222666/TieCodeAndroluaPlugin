@@ -38,6 +38,10 @@ abstract class LuaTask : Task() {
         return getBuildDir().resolve(path)
     }
 
+    fun getSrcDir() = project.projectDir.resolve("src")
+
+    fun getSrcDir(path: String) = getSrcDir().resolve(path)
+
 
     override fun initialize(
         project: Project,
@@ -85,6 +89,8 @@ abstract class LuaTask : Task() {
             readAll()
         }
     }
+
+
 
 
 }

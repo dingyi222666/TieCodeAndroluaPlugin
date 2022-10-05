@@ -12,6 +12,7 @@ import com.dingyi.tiecode.plugin.androlua.project.LuaProject
 import com.dingyi.tiecode.plugin.androlua.project.LuaProjectTemplate
 import com.tiecode.develop.util.firstparty.image.DrawableUtils
 import com.tiecode.plugin.app.ProjectPluginApp
+import io.github.dingyi.androlua.vm.LuaGlobal
 import io.github.dingyi.androlua.vm.SingleLuaVM
 
 class PluginApplication : ProjectPluginApp() {
@@ -42,9 +43,9 @@ class PluginApplication : ProjectPluginApp() {
 
         application = this
 
-        //LuaGlobal.init(this)
+        LuaGlobal.init(this)
 
-        //luaVm = SingleLuaVM()
+        luaVm = SingleLuaVM()
 
 
     }
