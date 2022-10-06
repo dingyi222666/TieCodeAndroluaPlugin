@@ -3,6 +3,9 @@ package com.dingyi.tiecode.plugin.androlua.action
 import com.dingyi.tiecode.plugin.androlua.build.base.LuaTaskBuilder
 import com.dingyi.tiecode.plugin.androlua.ktx.getJavaClass
 import com.dingyi.tiecode.plugin.androlua.project.LuaProject
+import com.tiecode.develop.component.api.option.TieItem
+import com.tiecode.develop.component.api.option.TieMenu
+import com.tiecode.develop.component.widget.option.TieMenuItem
 import com.tiecode.plugin.action.page.code.CodePageAction
 import com.tiecode.plugin.action.page.code.LogPageAction
 import com.tiecode.plugin.api.log.Logger
@@ -34,8 +37,35 @@ class LuaCodePageAction : CodePageAction() {
 
     }
 
+    override fun onCreateProjectMenu(menu: TieMenu) {
+        menu.addItem(TieMenuItem("清除缓存", 0x145))
+    }
+
+
+    override fun onProjectMenuClick(item: TieItem) {
+        if (item.id == 0x145) {
+            runClean()
+        }
+    }
+
+    private fun runClean() {
+
+        actionController.getAction(getJavaClass<LogPageAction>()).clearLog()
+
+
+        openLogPage()
+
+        val builder = LuaTaskBuilder(project, logger)
+
+        builder.runClean { _, _ ->
+
+        }
+    }
 
     private fun runBuild() {
+
+        actionController.getAction(getJavaClass<LogPageAction>()).clearLog()
+
 
         openLogPage()
 
@@ -46,10 +76,10 @@ class LuaCodePageAction : CodePageAction() {
         }
     }
 
-    //TODO: 读取包名，如果已经安装则尝试调用LuaActivity启动以实现热启动
+
     override fun runProject() {
 
-        actionController.getAction(getJavaClass<LogPageAction>()).clearLog()
+
 
         runBuild()
     }

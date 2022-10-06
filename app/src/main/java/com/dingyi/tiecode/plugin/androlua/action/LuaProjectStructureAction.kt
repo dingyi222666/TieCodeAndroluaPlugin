@@ -9,6 +9,7 @@ import com.tiecode.develop.util.firstparty.image.DrawableUtils
 import com.tiecode.plugin.action.page.code.ProjectFilePageAction
 import com.tiecode.plugin.api.project.ProjectContext
 import com.tiecode.plugin.api.project.structure.PSObject
+import java.io.File
 
 
 class LuaProjectStructureAction : ProjectFilePageAction() {
@@ -24,9 +25,16 @@ class LuaProjectStructureAction : ProjectFilePageAction() {
             it.isDirectory && it.name == ".tiecode"
         }
 
+      /*  registerPSObjectFilter {
+           it.name == "project.json"
+        }*/
+
         project = ProjectContext.getCurrentProject() as LuaProject
         expandPath(project.name)
     }
+
+
+
 
     override fun onFileNodeViewBind(holder: TreeItemViewHolder, node: TreeNode<PSObject>) {
 

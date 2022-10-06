@@ -165,13 +165,20 @@ dependencies {
 
     compileOnly(files("libs/tiecode-plugin-api-1.0.0-alpha24.jar"))
 
-    implementation(files("libs/luaj.jar","libs/sign.jar"))
+    implementation(files("libs/luaj.jar","libs/sign.jar","libs/axml.jar"))
 
     implementation("io.github.dingyi222666:androlua-standlone:1.0.4")
 
     implementation("com.github.SumiMakito:QuickKV:1.0.5")
 
     implementation("com.android:zipflinger:8.0.0-alpha02")
+
+    compileOnly("net.sf.kxml:kxml2:2.3.0") /*{
+        exclude("xpp3","xpp3")
+    }*/
+    implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("commons-io:commons-io:2.4")
+    implementation("org.dom4j:dom4j:2.1.3")
 
 
 }

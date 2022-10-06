@@ -1,9 +1,11 @@
 package com.dingyi.tiecode.plugin.androlua.build.task
 
+import com.dingyi.tiecode.plugin.androlua.PluginApplication
 import com.dingyi.tiecode.plugin.androlua.build.apkbuilder.ApkBuilder
 import com.dingyi.tiecode.plugin.androlua.build.apkbuilder.SignatureReader
 import com.dingyi.tiecode.plugin.androlua.build.base.LuaTask
 import com.dingyi.tiecode.plugin.androlua.ktx.substringPath
+import com.tiecode.develop.util.firstparty.android.ProviderUtils
 import com.tiecode.plugin.api.log.model.TieLogMessage
 
 class PackageApkTask : LuaTask() {
@@ -71,12 +73,28 @@ class PackageApkTask : LuaTask() {
             }
 
 
+        val iconFile = getSrcDir("icon.png")
+
+        if (iconFile.isFile) {
+            apkBuilder.addFile(iconFile, "res/drawable/icon.png")
+        }
+
+
+        val welcomeFile = getSrcDir("welcome.png")
+
+        if (welcomeFile.isFile) {
+            apkBuilder.addFile(iconFile, "res/drawable/welcome.png")
+        }
+
+
         apkBuilder.finish()
 
 
         runOnUiThread {
             logger.log(TieLogMessage("已生成apk到 ${outputApk.path}"))
         }
+
+        ProviderUtils.installAPK(PluginApplication.tiecodeContext,outputApk.path)
 
         return true
 

@@ -1,5 +1,6 @@
 package com.dingyi.tiecode.plugin.androlua.build.base
 
+import com.dingyi.tiecode.plugin.androlua.build.task.CleanUpTask
 import com.dingyi.tiecode.plugin.androlua.build.task.CompileLuaTask
 import com.dingyi.tiecode.plugin.androlua.build.task.ModifyAndroidManifestTask
 import com.dingyi.tiecode.plugin.androlua.build.task.PackageApkTask
@@ -32,10 +33,11 @@ class LuaTaskBuilder(
         )
     }
 
-    fun runSync(listener: ResultListener) {
+
+    fun runClean(listener: ResultListener) {
         super.build(
             listOf(
-                UnApkResourceTask()
+                CleanUpTask()
             ), listener
         )
     }

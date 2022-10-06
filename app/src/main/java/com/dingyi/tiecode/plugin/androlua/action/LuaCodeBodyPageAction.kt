@@ -28,6 +28,7 @@ class LuaCodeBodyPageAction : CodeBodyPageAction() {
 
 
 
+
     private fun setCustomHighlighter(editor: TieCodeEditor) {
         try {
             val assets = PluginApplication.application.assets

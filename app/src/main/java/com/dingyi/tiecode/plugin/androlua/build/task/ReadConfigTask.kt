@@ -28,7 +28,7 @@ class ReadConfigTask : LuaTask() {
 
         if (!initLuaFile.isFile) {
             runOnUiThread {
-                logger.log(TieLogMessage("找不到项目配置文件，无法构建项目！",TieLogMessage.ERROR))
+                logger.log(TieLogMessage("找不到项目配置文件，无法构建项目！", TieLogMessage.ERROR))
             }
             return false
         }
@@ -48,7 +48,27 @@ class ReadConfigTask : LuaTask() {
 
         }
 
-        return super.perform()
+
+        val checkPropertyArray = arrayOf("packagename", "appcode", "appver")
+
+
+        checkPropertyArray.forEach {
+            val value = taskContext.getKey(it)
+
+            if (value == null) {
+                runOnUiThread {
+                    logger.log(
+                        TieLogMessage(
+                            "配置文件缺失${it}属性，请检查init.lua!",
+                            TieLogMessage.ERROR
+                        )
+                    )
+                }
+                return false
+            }
+        }
+
+        return true
     }
 
     private fun toJavaObject(value: LuaValue): Any {
@@ -56,7 +76,7 @@ class ReadConfigTask : LuaTask() {
             is LuaTable -> {
                 val result = mutableMapOf<Any, Any>()
                 value.keys().forEach {
-                    result[it] = value[it]
+                    result[it] = toJavaObject(value[it])
                 }
                 result
             }
