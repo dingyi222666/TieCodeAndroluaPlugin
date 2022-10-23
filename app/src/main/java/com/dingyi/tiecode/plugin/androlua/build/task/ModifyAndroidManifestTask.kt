@@ -48,7 +48,7 @@ class ModifyAndroidManifestTask : LuaTask() {
         modifyAndroidManifestFile = getBuildDir("resource/AndroidManifest_modified.xml")
 
 
-        val needGenerated = initFile.md5 == compileHistoryData.get(initFile.absolutePath) &&
+        val needGenerated = initFile.md5 == compileHistoryData.getOrNull(initFile.absolutePath) &&
                 modifyAndroidManifestFile.isFile && modifyAndroidManifestFile.md5 ==
                 compileHistoryData.getOrNull(modifyAndroidManifestFile.absolutePath)
 

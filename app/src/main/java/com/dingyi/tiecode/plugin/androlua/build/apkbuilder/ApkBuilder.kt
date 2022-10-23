@@ -170,6 +170,8 @@ class ApkBuilder(
         addFile(sourceFile.inputStream(), targetPath)
     }
 
+
+
     private fun addFile(sourceFile: FileInputStream, targetPath: String) {
 
         val entry = JarEntry(targetPath)
@@ -189,8 +191,7 @@ class ApkBuilder(
 
         val calcSHA1 = (
                 targetPath != JarFile.MANIFEST_NAME && targetPath != CERT_SF_NAME &&
-                        targetPath != CERT_RSA_NAME && targetPath != OTACERT_NAME &&
-                        (!stripPattern.matcher(targetPath).matches())
+                        targetPath != CERT_RSA_NAME && (!stripPattern.matcher(targetPath).matches())
                 )
 
         var readLen = sourceFile.read(buffer)
@@ -205,10 +206,12 @@ class ApkBuilder(
         }
 
 
-        val attr = Attributes()
-        attr.putValue("SHA1-Digest", Base64.encode(sha1.digest()))
+        if (calcSHA1) {
+            val attr = Attributes()
+            attr.putValue("SHA1-Digest", Base64.encode(sha1.digest()))
 
-        manifest.entries[targetPath] = attr
+            manifest.entries[targetPath] = attr
+        }
 
     }
 
@@ -216,8 +219,6 @@ class ApkBuilder(
     companion object {
         private const val CERT_SF_NAME = "META-INF/CERT.SF"
         private const val CERT_RSA_NAME = "META-INF/CERT.RSA"
-
-        private const val OTACERT_NAME = "META-INF/com/android/otacert"
 
 
         // Files matching this pattern are not copied to the output.

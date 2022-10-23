@@ -54,9 +54,10 @@ class CompileLuaTask : LuaTask() {
                 val targetMD5 = file.md5
                 val historyMD5 = compileHistoryData.getOrPut(file.absolutePath, "")
 
-                targetMD5 != historyMD5.also {
-                    compileHistoryData.put(file.absolutePath, targetMD5)
-                }
+                val result = targetMD5 != historyMD5
+
+                compileHistoryData.put(file.absolutePath, targetMD5)
+                result
 
             }
 
@@ -80,7 +81,7 @@ class CompileLuaTask : LuaTask() {
             return layout
         """.trimIndent()
 
-        val targetFile = compileLuaDir.resolve(filePathWithoutSourceDir.replace(".aly",".lua"))
+        val targetFile = compileLuaDir.resolve(filePathWithoutSourceDir.replace(".aly", ".lua"))
 
         try {
 
@@ -88,7 +89,7 @@ class CompileLuaTask : LuaTask() {
 
             targetFile.writeText(targetCode)
 
-            LuaCompiler.compile(targetFile.path,targetFile.path)
+            LuaCompiler.compile(targetFile.path, targetFile.path)
 
         } catch (e: Exception) {
             runOnUiThread {
@@ -102,6 +103,7 @@ class CompileLuaTask : LuaTask() {
 
                 logger.postTrace(e)
             }
+            throw e
         }
 
         return targetFile
@@ -117,7 +119,7 @@ class CompileLuaTask : LuaTask() {
 
             file.copyTo(targetFile, true)
 
-            LuaCompiler.compile(targetFile.path,targetFile.path)
+            LuaCompiler.compile(targetFile.path, targetFile.path)
 
         } catch (e: Exception) {
             runOnUiThread {
@@ -130,7 +132,9 @@ class CompileLuaTask : LuaTask() {
                 )
 
                 logger.postTrace(e)
+
             }
+            throw e
         }
 
         return targetFile
@@ -159,7 +163,7 @@ class CompileLuaTask : LuaTask() {
                     )
                 )
 
-                logger.postTrace(e)
+                //logger.postTrace(e)
             }
 
             return false

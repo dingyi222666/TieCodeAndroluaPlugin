@@ -24,6 +24,8 @@ class PluginApplication : ProjectPluginApp() {
 
         tiecodeContext = superContext
 
+
+
         if (Build.VERSION.SDK_INT < 26) {
             Toast.makeText(superContext, "本插件不支持安卓版本小于8的系统", 0).show()
             return
@@ -35,7 +37,7 @@ class PluginApplication : ProjectPluginApp() {
 
 
         setProjectClass(
-            "AndroLua项目", 0x53.toString(), getJavaClass<LuaProject>(),
+            "AndroLua工程", 0x53.toString(), getJavaClass<LuaProject>(),
             DrawableUtils.getDrawable(this, R.drawable.androlua)
         )
 
@@ -59,7 +61,8 @@ class PluginApplication : ProjectPluginApp() {
         super.onInstall(superContext)
 
         if (Build.VERSION.SDK_INT < 26) {
-            Toast.makeText(superContext, "本插件不支持安卓版本小于8的系统", 0).show()
+            Toast.makeText(superContext, "本插件不支持安卓版本小于8的系统", Toast.LENGTH_LONG)
+                .show()
             return
         }
 
@@ -68,7 +71,7 @@ class PluginApplication : ProjectPluginApp() {
     companion object {
         lateinit var application: PluginApplication
         lateinit var luaVm: SingleLuaVM
-        lateinit var tiecodeContext:Context
+        lateinit var tiecodeContext: Context
     }
 
 

@@ -14,7 +14,7 @@ class QuickKVData<T, V : Serializable<T>>(
 ) : KeyValueData<String, T>(databaseName) {
 
 
-    private val quickKV = QuickKV(PluginApplication.tiecodeContext)
+    private val quickKV = QuickKV(PluginApplication.application.applicationContext)
         .apply {
             workspaceDir.mkdirs()
             setWorkspace(workspaceDir.path)

@@ -32,6 +32,20 @@ class PackageApkTask : LuaTask() {
 
         val resourceDir = getBuildDir("resource")
 
+        val iconFile = getSrcDir("icon.png")
+
+        if (iconFile.isFile) {
+            apkBuilder.addFile(iconFile, "res/drawable/icon.png")
+        }
+
+
+        val welcomeFile = getSrcDir("welcome.png")
+
+        if (welcomeFile.isFile) {
+            apkBuilder.addFile(iconFile, "res/drawable/welcome.png")
+        }
+
+
         //底包
         resourceDir.walk()
             .filterNot {
@@ -40,10 +54,25 @@ class PackageApkTask : LuaTask() {
                 ).startsWith("assets")
             }
             .forEach {
-                apkBuilder.addFile(
-                    it,
-                    it.substringPath(resourceDir)
-                )
+
+                val targetPath = it.substringPath(resourceDir)
+
+                when {
+                    targetPath == "res/drawable/icon.png" && iconFile.isFile -> {
+                        //skip
+                    }
+
+                    targetPath == "res/drawable/welcome.png" && welcomeFile.isFile -> {
+                        //skip
+                    }
+
+                    else -> apkBuilder.addFile(
+                        it,
+                        it.substringPath(resourceDir)
+                    )
+                }
+
+
             }
 
         //AndroidManifest.xml
@@ -73,18 +102,6 @@ class PackageApkTask : LuaTask() {
             }
 
 
-        val iconFile = getSrcDir("icon.png")
-
-        if (iconFile.isFile) {
-            apkBuilder.addFile(iconFile, "res/drawable/icon.png")
-        }
-
-
-        val welcomeFile = getSrcDir("welcome.png")
-
-        if (welcomeFile.isFile) {
-            apkBuilder.addFile(iconFile, "res/drawable/welcome.png")
-        }
 
 
         apkBuilder.finish()
@@ -94,7 +111,7 @@ class PackageApkTask : LuaTask() {
             logger.log(TieLogMessage("已生成apk到 ${outputApk.path}"))
         }
 
-        ProviderUtils.installAPK(PluginApplication.tiecodeContext,outputApk.path)
+        ProviderUtils.installAPK(PluginApplication.application.applicationContext, outputApk.path)
 
         return true
 

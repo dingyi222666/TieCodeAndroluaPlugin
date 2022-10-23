@@ -23,10 +23,10 @@
             android:value="4" />
         <meta-data
             android:name="plugin_versionCode"
-            android:value="2" />
+            android:value="3" />
         <meta-data
             android:name="plugin_versionName"
-            android:value="1.0" />
+            android:value="1.0#alpha02" />
         <meta-data
             android:name="plugin_author"
             android:value="dingyi" />

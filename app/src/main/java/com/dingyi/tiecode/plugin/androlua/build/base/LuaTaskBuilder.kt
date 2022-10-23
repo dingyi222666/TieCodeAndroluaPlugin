@@ -26,8 +26,8 @@ class LuaTaskBuilder(
             listOf(
                 ReadConfigTask(),
                 UnApkResourceTask(),
-                CompileLuaTask(),
                 ModifyAndroidManifestTask(),
+                CompileLuaTask(),
                 PackageApkTask(),
             ), listener
         )
